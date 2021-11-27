@@ -15,7 +15,7 @@
 #define MSG_TO_SEND "40.54 gradi C"
 #define PORT 8000
 
-void handle_ping_request (struct sockaddr_in Clnt, int sk, char buff[], char msg_to_send[]);
+void handle_request (struct sockaddr_in Clnt, int sk, char buff[], char msg_to_send[]);
 
 int main (int argc, char *argv[])
 {
@@ -83,7 +83,7 @@ int main (int argc, char *argv[])
           printf("Received message: %s\n from port %d, ip address %s\n", buff, ntohs(Clnt.sin_port), inet_ntoa(Clnt.sin_addr));
 #endif    
 
-          handle_ping_request (Clnt, sk, buff, MSG_TO_SEND);
+          handle_request (Clnt, sk, buff, MSG_TO_SEND);
        }
 
     } while (received_msg_size >= 0);
@@ -95,7 +95,7 @@ int main (int argc, char *argv[])
 }
 
 
-void handle_ping_request (struct sockaddr_in Clnt, int sk, char buff[], char msg_to_send[])
+void handle_request (struct sockaddr_in Clnt, int sk, char buff[], char msg_to_send[])
 {
     if (strlen (buff) > 0)
     {
