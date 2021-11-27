@@ -3,9 +3,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-// #include "domolib.h"
-
-
 #define IP "192.168.1.100"
 #define PORT 10000
 #define SIZE 1024
@@ -17,7 +14,6 @@ int main(int argc, char *argv[])
   struct sockaddr_in srv_addr;
   socklen_t addr_size;
   char buffer[SIZE];
-  int n;
 
   sk = socket(AF_INET, SOCK_STREAM, 0);
   if (sk < 0){
