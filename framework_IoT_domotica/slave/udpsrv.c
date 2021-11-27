@@ -19,15 +19,11 @@ void handle_request (struct sockaddr_in Clnt, int sk, char buff[], char msg_to_s
 
 int main (int argc, char *argv[])
 {
-    int server_activities = 1;
-    int timeout = 5;
     int sk;
     int received_msg_size;
     char buff[BUFF_SIZE];
     struct sockaddr_in Srv, Clnt;
-    unsigned int ClntAddrLen;
-    struct timeval read_timeout;
-    
+    unsigned int ClntAddrLen;    
     
     // SOCKET
     if((sk = socket (PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0)
@@ -48,35 +44,27 @@ int main (int argc, char *argv[])
         perror ("error in bind\n");
         exit (EXIT_FAILURE);
     }
-    printf ("bind successfull to IP: %s, port: %d\n", IP, PORT);
+    printf ("bind successfull to IP: %s, port: %d\n", IP, PORT);    
     
-    
-    // as long as there is input
+    // finché c'è un input
     do
     {
-       // set read_timeout to 10 s
-       read_timeout.tv_sec = timeout;
-       read_timeout.tv_usec = 0;
-            
-       // setsockopt (sk, SOL_SOCKET, SO_RCVTIMEO, &read_timeout, sizeof (struct timeval));
-
-        
        printf ("waiting for a message...\n");
        ClntAddrLen = sizeof (Clnt);
 
-       // inizialize request buffer
+       // prepara il buffer
        memset (buff, 0, BUFF_SIZE);
        
        received_msg_size = recvfrom(sk, buff, BUFF_SIZE, 0, (struct sockaddr*) &Clnt, &ClntAddrLen);
 
 
-       // if recvfrom is failed
+       // se recvfrm fallisce
        if (received_msg_size < 0)
        {
           perror ("error in recvfrom\n");
           exit (EXIT_FAILURE);
        }
-       else // something was received
+       else // qualcosa è stato ricevuto
        {
            // debug output
 #ifdef DEBUG
